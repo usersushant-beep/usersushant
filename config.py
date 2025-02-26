@@ -81,7 +81,7 @@ START_IMG_URL = "https://graph.org/file/4e46692091b4cd35e47fd-dc240cfe77c5038ffc
 
 PING_IMG_URL = "https://graph.org/file/4e46692091b4cd35e47fd-dc240cfe77c5038ffc.jpg"
 
-PLAYLIST_IMG_URL = "https://graph.org/file/763a841a2ad5cbb1e2fc5.jpg"
+PLAYLIST_IMG_URL = "https://graph.org/file/4e46692091b4cd35e47fd-dc240cfe77c5038ffc.jpg"
 STATS_IMG_URL = "https://graph.org/file/4e46692091b4cd35e47fd-dc240cfe77c5038ffc.jpg.jpg"
 TELEGRAM_AUDIO_URL = "https://graph.org//file/2f7debf856695e0ef0607.png"
 TELEGRAM_VIDEO_URL = "https://graph.org//file/2f7debf856695e0ef0607.png"
