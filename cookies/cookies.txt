@@ -1,62 +1,26 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import os
+# Netscape HTTP Cookie File
+# https://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file! Do not edit.
 
-options = Options()
-
-prefs = {'exit_type': 'Normal'}
-options.add_experimental_option("prefs", {'profile': prefs})
-options.add_argument(f"user-data-dir={os.getcwd()}/chrome")
-options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36")
-options.add_argument("no-sandbox")
-options.add_argument('start-maximized')
-options.add_argument('disable-infobars')
-options.add_argument("--autoplay-policy=no-user-gesture-required")
-options.add_experimental_option("excludeSwitches", ['enable-automation'])
-
-driver = webdriver.Chrome(options=options)
-
-def save_cookies_to_netscape_file(cookies, output_file):
-    with open(output_file, 'w') as f:
-        f.write("# Netscape HTTP Cookie File\n")
-        f.write("# This is a generated file! Do not edit.\n\n")
-        f.write("# domain  include_subdomains  path  secure  expiration_date  name  value\n")
-
-        for cookie in cookies:
-            expiry = int(cookie['expiry']) if 'expiry' in cookie else 0
-            
-            f.write(f"{cookie['domain']}\t")
-            f.write("TRUE\t")  # include_subdomains
-            f.write(f"{cookie['path']}\t")
-            f.write("TRUE\t" if cookie.get('secure') else "FALSE\t")
-            f.write(f"{expiry}\t")  # expiration_date
-            f.write(f"{cookie['name']}\t{cookie['value']}\n")
-
-    return f"Cookies have been saved to {output_file}"
-
-# Ensure user logs in before retrieving cookies
-while True:
-    user_input = input("Login to your YouTube account and play a video. Done? (Y/N): ").strip().upper()
-    if user_input == "Y":
-        break
-    print("Please enter 'Y' when you have completed the login.")
-
-print("Hello, Logged in to your account..!")
-
-# Get the filename for cookies
-while True:
-    user_input = input("Enter a name for your cookies file: ").strip()
-    if user_input:
-        output_file = user_input + ".txt"
-        break
-
-# Retrieve cookies
-cookies = driver.get_cookies()
-if not cookies:
-    print("No cookies retrieved! Ensure you are logged in and the site allows cookies.")
-else:
-    output_file = os.path.join(os.getcwd(), output_file)
-    save_cookies_to_netscape_file(cookies, output_file)
-    print("Cookies saved to:", output_file)
-
-driver.quit()
+.youtube.com	TRUE	/	TRUE	0	YSC	Xj3RAZ4NUTg
+.youtube.com	TRUE	/	TRUE	1753379667	VISITOR_INFO1_LIVE	2fR24FyqwBY
+.youtube.com	TRUE	/	TRUE	1753379667	VISITOR_PRIVACY_METADATA	CgJJThIEGgAgEg%3D%3D
+.youtube.com	TRUE	/	TRUE	1753379616	__Secure-ROLLOUT_TOKEN	CP2j-pnBptj9XxDR7uutuJGLAxjR7uutuJGLAw%3D%3D
+.youtube.com	TRUE	/	TRUE	1737829416	GPS	1
+.youtube.com	TRUE	/	TRUE	1772387707	PREF	f6=40000000&tz=Asia.Kolkata&f7=100
+.youtube.com	TRUE	/	FALSE	1772387665	SID	g.a000swjFJer6Ea_CBkevsk8gIGr5efLfEIA88VrmAW6gOTXdXTbrwauCh-a_3rbwWAxCfPMWewACgYKAWcSARESFQHGX2MiyJRNz5b-IAHVQc801F-qgxoVAUF8yKoyFJ_BkOTdtLGLsvdvQ7WY0076
+.youtube.com	TRUE	/	TRUE	1769363665	__Secure-1PSIDTS	sidts-CjIBmiPuTcjUwPf3vwz5L52kYcc0lESIiUmeBeq5iHrac2Csju_94f6Il0mbPrOG-pqKfhAA
+.youtube.com	TRUE	/	TRUE	1769363665	__Secure-3PSIDTS	sidts-CjIBmiPuTcjUwPf3vwz5L52kYcc0lESIiUmeBeq5iHrac2Csju_94f6Il0mbPrOG-pqKfhAA
+.youtube.com	TRUE	/	TRUE	1772387665	__Secure-1PSID	g.a000swjFJer6Ea_CBkevsk8gIGr5efLfEIA88VrmAW6gOTXdXTbrCjAkLhuggdt6nmefS2-6-AACgYKAfoSARESFQHGX2MixVhqh5_jX_ODHRcl6To4DxoVAUF8yKpwG3v-lPlWGFwltJ0yzCNA0076
+.youtube.com	TRUE	/	TRUE	1772387665	__Secure-3PSID	g.a000swjFJer6Ea_CBkevsk8gIGr5efLfEIA88VrmAW6gOTXdXTbr8J6j4dQLtEPl9E5D8QCdxAACgYKAeISARESFQHGX2MilMUkMBRVu1wDfijAl4lcvRoVAUF8yKp4VJZrlppFJVK4cZp2oCds0076
+.youtube.com	TRUE	/	FALSE	1772387665	HSID	A0pqgQ9ENJ5MTrtK7
+.youtube.com	TRUE	/	TRUE	1772387665	SSID	AgTdHoWpblV2OcjoK
+.youtube.com	TRUE	/	FALSE	1772387665	APISID	xwrPsaXFcVXRHmLO/AnFhVadct7udMMLY9
+.youtube.com	TRUE	/	TRUE	1772387665	SAPISID	PfZSU7OiaI-yVXjJ/ARasgVGXAYQF7i3en
+.youtube.com	TRUE	/	TRUE	1772387665	__Secure-1PAPISID	PfZSU7OiaI-yVXjJ/ARasgVGXAYQF7i3en
+.youtube.com	TRUE	/	TRUE	1772387665	__Secure-3PAPISID	PfZSU7OiaI-yVXjJ/ARasgVGXAYQF7i3en
+.youtube.com	TRUE	/	FALSE	1769363838	SIDCC	AKEyXzUBNVfoJV4fMwam9BqfKab2l2SYYJv3Ir2cbLsYuU-7SWOHTkb0eTbThTIKHLzOOxkG3Q
+.youtube.com	TRUE	/	TRUE	1769363838	__Secure-1PSIDCC	AKEyXzWcY8KAiVKhw036SaXzl47dY7tvnTIJX547SL6bnvICaSc4QzGu9iIebI3dyYHRSgjiJg
+.youtube.com	TRUE	/	TRUE	1769363838	__Secure-3PSIDCC	AKEyXzVXo0YmmqzU0C1VTOV2mQe708Vpz0r7cEHPzjBflSqrAEAm5hqrA05mZ60HmGnLeGU1RA
+.youtube.com	TRUE	/	TRUE	1772387667	LOGIN_INFO	AFmmF2swRAIgZn7DX1wHRqaBh4SKk3_KijZ4GOJlgtFl_nfJmSABAywCIFg9KC1PhzcfXE016E4WtkbW6fjCeKjJUM_fqmBum9is:QUQ3MjNmeEVNT09ySjV3cVVZZU1NQUl2TnZIaTZvbTZ5VHNTY2xGSE5sOFhzMkZ6SHBqR3I1RkgxbFQzZGc3a0lPRTFNUEN3OGpqLUlJdmtrWE1wVW5JRjAtcFEtRW9JSF9uTTZfb1Zhb2sxdE9sRXhJUW5NYTMtenhSUF9CYXRGTUJrYTU2TzVVLUdfd2V3YUd2cUlia3FHcG82RkR6ME9n
+.youtube.com	TRUE	/	FALSE	1737827713	ST-tof1sm	csn=obxiyoST029WYLCF&itct=CKgBEPxaGAAiEwjH29rVuJGLAxXGWJ0JHUYQKuQyBnNlYXJjaFILemFjayBrbmlnaHSaAQMQ9CQ%3D
