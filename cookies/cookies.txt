@@ -7,13 +7,12 @@ options = Options()
 prefs = {'exit_type': 'Normal'}
 options.add_experimental_option("prefs", {'profile': prefs})
 options.add_argument(f"user-data-dir={os.getcwd()}/chrome")
-options.add_argument("user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1")
+options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36")
 options.add_argument("no-sandbox")
 options.add_argument('start-maximized')
 options.add_argument('disable-infobars')
 options.add_argument("--autoplay-policy=no-user-gesture-required")
 options.add_experimental_option("excludeSwitches", ['enable-automation'])
-
 
 driver = webdriver.Chrome(options=options)
 
@@ -22,38 +21,42 @@ def save_cookies_to_netscape_file(cookies, output_file):
         f.write("# Netscape HTTP Cookie File\n")
         f.write("# This is a generated file! Do not edit.\n\n")
         f.write("# domain  include_subdomains  path  secure  expiration_date  name  value\n")
-        
+
         for cookie in cookies:
-            # Determine the correct attribute name for expiry based on Selenium version or browser
-            expiry = cookie.get('expiry') or cookie.get('expires') or 0
+            expiry = int(cookie['expiry']) if 'expiry' in cookie else 0
             
             f.write(f"{cookie['domain']}\t")
             f.write("TRUE\t")  # include_subdomains
             f.write(f"{cookie['path']}\t")
             f.write("TRUE\t" if cookie.get('secure') else "FALSE\t")
-            f.write(f"{int(expiry)}\t")  # expiration_date
+            f.write(f"{expiry}\t")  # expiration_date
             f.write(f"{cookie['name']}\t{cookie['value']}\n")
 
     return f"Cookies have been saved to {output_file}"
 
+# Ensure user logs in before retrieving cookies
 while True:
- user_input = input("Login to your YouTube account play a video [Completed] (Y/N)")
- if user_input == "Y":
-   break
-  
-print(f'Hello, Logged in to your account..!')
+    user_input = input("Login to your YouTube account and play a video. Done? (Y/N): ").strip().upper()
+    if user_input == "Y":
+        break
+    print("Please enter 'Y' when you have completed the login.")
 
+print("Hello, Logged in to your account..!")
 
+# Get the filename for cookies
 while True:
- user_input = input("enter a name for your cookies file: ")
- if user_input:
-   output_file = f"{user_input}.txt"
-   break
+    user_input = input("Enter a name for your cookies file: ").strip()
+    if user_input:
+        output_file = user_input + ".txt"
+        break
 
+# Retrieve cookies
 cookies = driver.get_cookies()
-output_file = f"{os.getcwd()}/{output_file}"
-save_cookies_to_netscape_file(cookies, output_file)
-print("Cookies saved to:",output_file)
-
+if not cookies:
+    print("No cookies retrieved! Ensure you are logged in and the site allows cookies.")
+else:
+    output_file = os.path.join(os.getcwd(), output_file)
+    save_cookies_to_netscape_file(cookies, output_file)
+    print("Cookies saved to:", output_file)
 
 driver.quit()
